@@ -1,9 +1,10 @@
-package ru.alex.NauJava;
+package ru.alex.NauJava.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.alex.NauJava.CommandProcessor;
 
 import java.util.Scanner;
 
@@ -23,6 +24,7 @@ public class CmdConfig {
                 System.out.println("create <номер телефона> <имя>");
                 System.out.println("delete <id>");
                 System.out.println("find <id>");
+                System.out.println("list");
                 System.out.println("updateNumber <id> <новый номер телефона>");
                 System.out.println("updateName <id> <новое имя>");
                 System.out.println("exit\n");

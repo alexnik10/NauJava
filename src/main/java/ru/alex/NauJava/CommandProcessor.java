@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.alex.NauJava.entities.Contact;
 import ru.alex.NauJava.services.ContactService;
 
+import java.util.List;
+
 @Component
 public class CommandProcessor
 {
@@ -35,6 +37,18 @@ public class CommandProcessor
             {
                 Contact contact = contactService.findById(Long.parseLong(cmd[1]));
                 System.out.println("{\n    id: " + contact.getId() + ",\n    number: " + contact.getPhoneNumber() + ",\n    name: " + contact.getName() + "\n}");
+            }
+            case "list" ->
+            {
+                List<Contact> contacts = contactService.getAllContacts();
+                if (contacts.isEmpty()) {
+                    System.out.println("Список контактов пуст.");
+                } else {
+                    System.out.println("Список всех контактов:");
+                    for (Contact contact : contacts) {
+                        System.out.println("{\n    id: " + contact.getId() + ",\n    number: " + contact.getPhoneNumber() + ",\n    name: " + contact.getName() + "\n}");
+                    }
+                }
             }
             case "updateNumber" ->
             {

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.alex.NauJava.dao.ContactRepository;
 import ru.alex.NauJava.entities.Contact;
 
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
     private final ContactRepository contactRepository;
@@ -29,6 +31,11 @@ public class ContactServiceImpl implements ContactService {
             throw new RuntimeException("Контакт с ID " + id + " не найден.");
         }
         return contact;
+    }
+
+    @Override
+    public List<Contact> getAllContacts() {
+        return contactRepository.readAll();
     }
 
     @Override

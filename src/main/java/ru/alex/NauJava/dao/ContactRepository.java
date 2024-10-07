@@ -1,14 +1,16 @@
 package ru.alex.NauJava.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ru.alex.NauJava.entities.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Service
+@Component
 public class ContactRepository implements CrudRepository<Contact, Long> {
     private final List<Contact> contactContainer;
     private final AtomicLong idGenerator = new AtomicLong(0);
@@ -33,9 +35,14 @@ public class ContactRepository implements CrudRepository<Contact, Long> {
     }
 
     @Override
+    public List<Contact> readAll() {
+        return new ArrayList<>(contactContainer);
+    }
+
+    @Override
     public void update(Contact contact) {
         for (int i = 0; i < contactContainer.size(); i++) {
-            if (contact.getId() == contactContainer.get(i).getId()) {
+            if (contact.getId().equals(contactContainer.get(i).getId())) {
                 contactContainer.set(i, contact);
                 return;
             }
