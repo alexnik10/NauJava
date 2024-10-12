@@ -1,67 +1,43 @@
 package ru.alex.NauJava.services;
 
+import jakarta.persistence.EntityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ru.alex.NauJava.dao.ContactRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alex.NauJava.entities.Contact;
+import ru.alex.NauJava.repositories.ContactRepository;
 
 import java.util.List;
 
 @Service
 public class ContactServiceImpl implements ContactService {
+    private static final Logger logger = LoggerFactory.getLogger(ContactServiceImpl.class);
     private final ContactRepository contactRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public ContactServiceImpl(ContactRepository contactRepository) {
+    public ContactServiceImpl(ContactRepository contactRepository, EntityManager entityManager) {
         this.contactRepository = contactRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
-    public void createContact(String number, String name) {
-        Contact contact = new Contact();
-        contact.setPhoneNumber(number);
-        contact.setName(name);
-        contactRepository.create(contact);
-    }
-
-    @Override
-    public Contact findById(Long id) {
-        Contact contact = contactRepository.read(id);
-        if (contact == null) {
-            throw new RuntimeException("Контакт с ID " + id + " не найден.");
-        }
-        return contact;
-    }
-
-    @Override
-    public List<Contact> getAllContacts() {
-        return contactRepository.readAll();
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        contactRepository.delete(id);
-    }
-
-    @Override
-    public void updateNumber(Long id, String newNumber) {
-        Contact contact = contactRepository.read(id);
-        if (contact != null) {
-            contact.setPhoneNumber(newNumber);
-            contactRepository.update(contact);
-        } else {
-            throw new RuntimeException("Контакт с ID " + id + " не найден для обновления номера.");
-        }
-    }
-
-    @Override
-    public void updateName(Long id, String newName) {
-        Contact contact = contactRepository.read(id);
-        if (contact != null) {
-            contact.setName(newName);
-            contactRepository.update(contact);
-        } else {
-            throw new RuntimeException("Контакт с ID " + id + " не найден для обновления имени.");
+    @Transactional
+    public boolean deleteContactsByIds(List<Long> contactIds) {
+        try {
+            int deletedCount = contactRepository.deleteContactsByIds(contactIds);
+            logger.info("Удалено {} из {} контактов", deletedCount, contactIds.size());
+            if (deletedCount != contactIds.size()) {
+                throw new IllegalArgumentException("Не все контакты найдены для удаления");
+            }
+            entityManager.flush();
+            entityManager.clear();
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 }

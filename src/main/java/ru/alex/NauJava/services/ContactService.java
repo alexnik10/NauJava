@@ -1,19 +1,13 @@
 package ru.alex.NauJava.services;
 
-import ru.alex.NauJava.entities.Contact;
-
 import java.util.List;
 
 public interface ContactService {
-    void createContact(String number, String name);
-
-    Contact findById(Long id);
-
-    List<Contact> getAllContacts();
-
-    void deleteById(Long id);
-
-    void updateNumber(Long id, String newNumber);
-
-    void updateName(Long id, String newName);
+    /**
+     *Удаляет телефоны по списку ID. Если хотя бы один телефон не найден, транзакция откатывается.
+     *
+     * @param contactIds Список ID контактов для удаления.
+     * @return true, если все контакты успешно удалены, иначе false.
+     */
+    boolean deleteContactsByIds(List<Long> contactIds);
 }
