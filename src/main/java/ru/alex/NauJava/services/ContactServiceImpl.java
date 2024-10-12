@@ -1,9 +1,11 @@
 package ru.alex.NauJava.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ru.alex.NauJava.dao.ContactRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alex.NauJava.entities.Contact;
+import ru.alex.NauJava.repositories.ContactRepository;
 
 import java.util.List;
 
@@ -17,51 +19,18 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void createContact(String number, String name) {
-        Contact contact = new Contact();
-        contact.setPhoneNumber(number);
-        contact.setName(name);
-        contactRepository.create(contact);
-    }
-
-    @Override
-    public Contact findById(Long id) {
-        Contact contact = contactRepository.read(id);
-        if (contact == null) {
-            throw new RuntimeException("Контакт с ID " + id + " не найден.");
-        }
-        return contact;
-    }
-
-    @Override
-    public List<Contact> getAllContacts() {
-        return contactRepository.readAll();
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        contactRepository.delete(id);
-    }
-
-    @Override
-    public void updateNumber(Long id, String newNumber) {
-        Contact contact = contactRepository.read(id);
-        if (contact != null) {
-            contact.setPhoneNumber(newNumber);
-            contactRepository.update(contact);
-        } else {
-            throw new RuntimeException("Контакт с ID " + id + " не найден для обновления номера.");
-        }
-    }
-
-    @Override
-    public void updateName(Long id, String newName) {
-        Contact contact = contactRepository.read(id);
-        if (contact != null) {
-            contact.setName(newName);
-            contactRepository.update(contact);
-        } else {
-            throw new RuntimeException("Контакт с ID " + id + " не найден для обновления имени.");
+    @Transactional
+    public boolean deleteContactsByIds(List<Long> contactIds) {
+        try {
+            //contactRepository.deleteAllById(contactIds);
+            for (Long id : contactIds) {
+                Contact contact = new Contact();
+                contact.setId(id);
+                contactRepository.delete(contact);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
