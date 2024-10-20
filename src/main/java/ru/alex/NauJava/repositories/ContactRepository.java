@@ -3,10 +3,12 @@ package ru.alex.NauJava.repositories;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import ru.alex.NauJava.entities.Contact;
 
 import java.util.List;
 
+@RepositoryRestResource
 public interface ContactRepository extends CrudRepository<Contact, Long> {
     List<Contact> findByFirstNameOrLastName(String firstName, String lastName);
 
