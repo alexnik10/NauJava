@@ -32,13 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 appUser.getUsername(),
                 appUser.getPasswordHash(),
-                mapRoles(appUser)
+                List.of()
         );
-    }
-
-    private Collection<GrantedAuthority> mapRoles(User appUser) {
-        return appUser.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
     }
 }

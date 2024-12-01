@@ -23,11 +23,10 @@ public class SpringSecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/registration", "/login", "/logout").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").hasRole("ADMIN")
-                        .requestMatchers("/users**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
+                        .loginPage("/login")
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error=true")
                         .permitAll()
@@ -38,7 +37,8 @@ public class SpringSecurityConfig {
                 )
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/login")
-                );
+                )
+                .csrf().disable();
 
         return http.build();
     }

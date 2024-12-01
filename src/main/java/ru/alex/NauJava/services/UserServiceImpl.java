@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.alex.NauJava.entities.User;
-import ru.alex.NauJava.enums.Role;
 import ru.alex.NauJava.repositories.UserRepository;
 
 import java.util.Optional;
@@ -27,11 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(String username, String password, Role role) {
+    public User addUser(String username, String password) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new IllegalArgumentException("User with username " + username + " already exists");
         }
-        User user = new User(username, passwordEncoder.encode(password), role);
+        User user = new User(username, passwordEncoder.encode(password));
         return userRepository.save(user);
     }
 }
