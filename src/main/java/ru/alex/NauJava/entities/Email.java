@@ -1,13 +1,10 @@
 package ru.alex.NauJava.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import ru.alex.NauJava.enums.EmailType;
 
 @Entity
 @Table(name = "emails")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Email {
 
     @Id

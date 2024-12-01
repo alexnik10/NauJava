@@ -2,9 +2,7 @@ package ru.alex.NauJava.entities;
 
 
 import jakarta.persistence.*;
-import ru.alex.NauJava.enums.Role;
 
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -20,19 +18,19 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contact> contacts;
 
-    public User(String username, String passwordHash, Role role) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> groups;
+
+    public User(String username, String passwordHash) {
         this.username = username;
         this.passwordHash = passwordHash;
-        this.roles = Collections.singletonList(role);
     }
 
-    public User() {}
+    public User() {
+    }
 
     public String getUsername() {
         return username;
@@ -50,11 +48,27 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Contact> getContacts() {
+        return contacts;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

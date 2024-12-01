@@ -1,17 +1,12 @@
 package ru.alex.NauJava.repositories;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.alex.NauJava.entities.Contact;
 
 import java.util.List;
 
-@RepositoryRestResource
-public interface ContactRepository extends CrudRepository<Contact, Long> {
-    List<Contact> findByFirstNameOrLastName(String firstName, String lastName);
-
-    @Query("SELECT c FROM Contact c JOIN c.groups g WHERE g.name = :groupName")
-    List<Contact> findContactsByGroupName(@Param("groupName") String groupName);
+public interface ContactRepository extends JpaRepository<Contact, Long> {
+    List<Contact> findAllByUserId(Long userId);
+    List<Contact> findAllByUserUsername(String username);
+    List<Contact> findByGroupsId(Long groupId);
 }

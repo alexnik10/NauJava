@@ -1,14 +1,11 @@
 package ru.alex.NauJava.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import ru.alex.NauJava.enums.PhoneType;
 
 
 @Entity
 @Table(name = "phones")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Phone {
     @Id
     @GeneratedValue

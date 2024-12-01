@@ -1,9 +1,10 @@
 package ru.alex.NauJava.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.alex.NauJava.entities.Phone;
 
-@RepositoryRestResource
-public interface PhoneRepository extends CrudRepository<Phone, Long> {
+import java.util.List;
+
+public interface PhoneRepository extends JpaRepository<Phone, Long> {
+    List<Phone> findAllByContactId(Long contactId);
 }
