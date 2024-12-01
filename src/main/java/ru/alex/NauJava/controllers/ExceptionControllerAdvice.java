@@ -2,6 +2,7 @@ package ru.alex.NauJava.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.alex.NauJava.exceptions.ContactNotFoundException;
 
 import java.util.NoSuchElementException;
 
@@ -19,6 +20,13 @@ public class ExceptionControllerAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNoSuchElementException(NoSuchElementException e) {
+        return ErrorResponse.create(e);
+    }
+
+    @ExceptionHandler(ContactNotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleContactNotFoundException(ContactNotFoundException e) {
         return ErrorResponse.create(e);
     }
 
