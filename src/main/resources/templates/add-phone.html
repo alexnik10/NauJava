@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить телефон</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1>Добавить телефон</h1>
+<form th:action="@{/phone/add}" method="post">
+    <input type="hidden" name="contactId" th:value="${phone.contactId}">
+
+    <label for="number">Номер:</label>
+    <input type="text" id="number" name="number" th:value="${phone.number}" required>
+    <br>
+
+    <label for="type">Тип:</label>
+    <select id="type" name="type" th:value="${phone.type}">
+        <option th:each="type : ${T(ru.alex.NauJava.enums.PhoneType).values()}"
+                th:value="${type}"
+                th:text="${type}"></option>
+    </select>
+    <br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/contacts/{id}(id=${phone.contactId})}">Отмена</a>
+</body>
+</html>

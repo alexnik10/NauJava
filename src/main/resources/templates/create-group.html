@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать группу</title>
+</head>
+<body>
+<!-- Включение верхнего меню -->
+<div th:replace="fragments/menu :: menu"></div>
+
+<h1>Создать группу</h1>
+
+<form th:action="@{/groups/create}" th:object="${group}" method="post">
+    <div>
+        <label for="name">Название группы:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required>
+    </div>
+    <div>
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description" th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <button type="submit">Создать</button>
+    </div>
+</form>
+</body>
+</html>

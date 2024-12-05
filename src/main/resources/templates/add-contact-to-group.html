@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить контакт в группу</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h1>Добавить контакт в группу</h1>
+
+<form th:action="@{/groups/add-contact/{id}(id=${groupId})}" method="post">
+    <div>
+        <label for="contact">Выберите контакт:</label>
+        <select id="contact" name="contactId">
+            <option th:each="contact : ${contacts}"
+                    th:value="${contact.id}"
+                    th:text="${contact.lastName + ' ' + contact.firstName}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Добавить</button>
+    </div>
+</form>
+
+<a th:href="@{/groups}">Отмена</a>
+</body>
+</html>

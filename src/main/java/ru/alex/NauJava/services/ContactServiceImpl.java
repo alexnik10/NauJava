@@ -2,9 +2,9 @@ package ru.alex.NauJava.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.alex.NauJava.dto.ContactCreateDTO;
-import ru.alex.NauJava.dto.ContactDTO;
-import ru.alex.NauJava.dto.ContactUpdateDTO;
+import ru.alex.NauJava.dto.contact.ContactCreateDTO;
+import ru.alex.NauJava.dto.contact.ContactDTO;
+import ru.alex.NauJava.dto.contact.ContactUpdateDTO;
 import ru.alex.NauJava.entities.Contact;
 import ru.alex.NauJava.entities.User;
 import ru.alex.NauJava.exceptions.ContactNotFoundException;

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать контакт</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1>Редактировать контакт</h1>
+<form th:action="@{/contacts/edit}" method="post">
+    <input type="hidden" name="id" th:value="${contact.id}">
+    <label for="lastName">Фамилия:</label>
+    <input type="text" id="lastName" name="lastName" th:value="${contact.lastName}">
+    <br>
+
+    <label for="firstName">Имя:</label>
+    <input type="text" id="firstName" name="firstName" th:value="${contact.firstName}">
+    <br>
+
+    <label for="middleName">Отчество:</label>
+    <input type="text" id="middleName" name="middleName" th:value="${contact.middleName}">
+    <br>
+
+    <label for="birthday">Дата рождения:</label>
+    <input type="date" id="birthday" name="birthday" th:value="${contact.birthday}">
+    <br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/contacts/{id}(id=${contact.id})}">Отмена</a>
+</body>
+</html>

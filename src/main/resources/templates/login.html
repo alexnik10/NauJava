@@ -88,12 +88,10 @@
 <div class="login-container">
     <h2>Вход</h2>
 
-    <!-- Отображение ошибки, если логин не удался -->
     <div th:if="${param.error}" class="error-message">
         Неправильное имя пользователя или пароль
     </div>
 
-    <!-- Форма входа -->
     <form th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="username">Имя пользователя</label>
@@ -106,7 +104,6 @@
         <button type="submit" class="submit-button">Войти</button>
     </form>
 
-    <!-- Ссылка на регистрацию -->
     <div class="registration-link">
         <p>Нет аккаунта? <a th:href="@{/registration}">Зарегистрируйтесь</a></p>
     </div>

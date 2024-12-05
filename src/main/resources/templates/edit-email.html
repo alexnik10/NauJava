@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать электронную почту</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1>Редактировать электронную почту</h1>
+<form th:action="@{/email/edit}" method="post">
+    <input type="hidden" name="id" th:value="${email.id}">
+    <input type="hidden" name="contactId" th:value="${contactId}">
+
+    <label for="emailAddress">Адрес электронной почты:</label>
+    <input type="email" id="emailAddress" name="emailAddress" th:value="${email.emailAddress}" required>
+    <br>
+
+    <label for="type">Тип:</label>
+    <select id="type" name="type" th:value="${email.type}">
+        <option th:each="type : ${T(ru.alex.NauJava.enums.EmailType).values()}"
+                th:value="${type}"
+                th:text="${type}"
+                th:selected="${type == email.type}"></option>
+    </select>
+    <br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/contacts/{id}(id=${contactId})}">Отмена</a>
+</body>
+</html>

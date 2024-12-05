@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать адрес</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1>Редактировать адрес</h1>
+
+<form th:action="@{/address/edit}" method="post">
+    <input type="hidden" name="id" th:value="${address.id}">
+    <input type="hidden" name="contactId" th:value="${contactId}">
+
+    <label for="street">Улица:</label>
+    <input type="text" id="street" name="street" th:value="${address.street}">
+    <br>
+
+    <label for="city">Город:</label>
+    <input type="text" id="city" name="city" th:value="${address.city}">
+    <br>
+
+    <label for="postalCode">Почтовый индекс:</label>
+    <input type="text" id="postalCode" name="postalCode" th:value="${address.postalCode}">
+    <br>
+
+    <label for="country">Страна:</label>
+    <input type="text" id="country" name="country" th:value="${address.country}">
+    <br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/contacts/{id}(id=${contactId})}">Отмена</a>
+</body>
+</html>

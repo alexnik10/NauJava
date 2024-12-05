@@ -1,8 +1,8 @@
 package ru.alex.NauJava.services;
 
-import ru.alex.NauJava.dto.ContactCreateDTO;
-import ru.alex.NauJava.dto.ContactDTO;
-import ru.alex.NauJava.dto.ContactUpdateDTO;
+import ru.alex.NauJava.dto.contact.ContactCreateDTO;
+import ru.alex.NauJava.dto.contact.ContactDTO;
+import ru.alex.NauJava.dto.contact.ContactUpdateDTO;
 
 import java.util.List;
 

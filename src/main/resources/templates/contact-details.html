@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детальная информация о контакте</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1>Детальная информация о контакте</h1>
+
+<div>
+    <h2 th:text="'Контакт: ' + ${contact.firstName} + ' ' + ${contact.lastName}"></h2>
+    <p><strong>Фамилия:</strong> <span th:text="${contact.lastName ?: 'Не указано'}"></span></p>
+    <p><strong>Имя:</strong> <span th:text="${contact.firstName ?: 'Не указано'}"></span></p>
+    <p><strong>Отчество:</strong> <span th:text="${contact.middleName ?: 'Не указано'}"></span></p>
+    <p><strong>Дата рождения:</strong> <span th:text="${contact.birthday}"></span></p>
+</div>
+
+<div>
+    <a th:href="@{/contacts/edit/{id}(id=${contact.id})}">Редактировать</a>
+</div>
+
+<div>
+    <h3>Телефонные номера</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Тип</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="phone : ${phones}">
+            <td th:text="${phone.number}"></td>
+            <td th:text="${phone.type}"></td>
+            <td>
+                <a th:href="@{/phone/edit/{id}(id=${phone.id}, contactId=${contact.id})}">Редактировать</a> |
+                <form th:action="@{/phone/delete/{id}(id=${phone.id})}" method="post" style="display: inline;">
+                    <input type="hidden" name="contactId" th:value="${contact.id}">
+                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот номер?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/phone/add/{contactId}(contactId=${contact.id})}">Добавить номер</a>
+</div>
+
+<div>
+    <h3>Электронные почты</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Тип</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="email : ${emails}">
+            <td th:text="${email.emailAddress}"></td>
+            <td th:text="${email.type}"></td>
+            <td>
+                <a th:href="@{/email/edit/{id}(id=${email.id}, contactId=${contact.id})}">Редактировать</a> |
+                <form th:action="@{/email/delete/{id}(id=${email.id})}" method="post" style="display: inline;">
+                    <input type="hidden" name="contactId" th:value="${contact.id}">
+                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот email?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/email/add/{contactId}(contactId=${contact.id})}">Добавить email</a>
+</div>
+
+<div>
+    <h3>Адреса</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Улица</th>
+            <th>Город</th>
+            <th>Индекс</th>
+            <th>Страна</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="address : ${addresses}">
+            <td th:text="${address.street}"></td>
+            <td th:text="${address.city}"></td>
+            <td th:text="${address.postalCode}"></td>
+            <td th:text="${address.country}"></td>
+            <td>
+                <a th:href="@{/address/edit/{id}(id=${address.id}, contactId=${contact.id})}">Редактировать</a> |
+                <form th:action="@{/address/delete/{id}(id=${address.id})}" method="post" style="display: inline;">
+                    <input type="hidden" name="contactId" th:value="${contact.id}">
+                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот адрес?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/address/add/{contactId}(contactId=${contact.id})}">Добавить адрес</a>
+</div>
+
+<br>
+<a href="/contacts">Назад к списку контактов</a>
+</body>
+</html>
